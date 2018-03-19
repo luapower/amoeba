@@ -1,6 +1,9 @@
 
+--Amoeba Cassowary constraint solver.
+--Written by Xavier Wang. MIT License.
+
 local function meta(name, parent)
-   t = {}
+   local t = {}
    t.__name  = name
    t.__index = t
    return setmetatable(t, parent)
@@ -413,7 +416,7 @@ local function add_with_artificial_variable(self, expr)
       row:solve_for(entering, a)
       self.rows[entering] = row
    end
-   
+
    for var, row in pairs(self.rows) do row[a] = nil end
    self.objective[a] = nil
    return success
@@ -627,7 +630,7 @@ function SimplexSolver:addedit(var, strength)
    self.edits[var] = {
       constraint = cons,
       plus = info.marker,
-      minus = info.other, 
+      minus = info.other,
       prev_constant = var.value or 0.0,
    }
    return self
@@ -665,13 +668,6 @@ function SimplexSolver:setstrength(cons, strength)
    optimize(self)
    update_external_variables(self)
    return self
-end
-
-function SimplexSolver:resolve()
-   dual_optimize(self)
-   set_external_variables()
-   reset_stay_constant(self)
-   self.infeasible_rows = {}
 end
 
 function SimplexSolver:set_constant(cons, constant)

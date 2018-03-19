@@ -1,4 +1,3 @@
-package.path = ""
 local amoeba = require "amoeba"
 
 local S = amoeba.new()
@@ -47,3 +46,34 @@ print(xl)
 print(xm)
 print(xr)
 
+--speed test
+local now = require'time'.clock
+
+local S = amoeba.new()
+local vars = {}
+for i=1,20 do
+	vars[i] = S:var('x'..i)
+end
+for i=1,20 do
+	local c = S:constraint():add(vars[i]):relation(i < 20 and '>=' or '<='):add(1)
+	if i > 1 then
+		c:add(vars[i-1])
+	end
+	S:addconstraint(c)
+	print(c)
+end
+
+local n = 100000
+print(('\nstarting benchmark (%d iterations)'):format(n))
+local start = now()
+S:suggest(vars[20], 0)
+for i = 1, n do
+  S:suggest(vars[1], i)
+end
+print(vars[1])
+print(vars[2])
+print(vars[19])
+print(vars[20])
+local stop = now()
+--print(S)
+print(('solved in %fms'):format((stop-start)*1000/n))
