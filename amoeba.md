@@ -46,6 +46,6 @@ __Notes:__
 
   * `op` can be `'>='` `'<='`, `'=='`, `'ge'`, `'le'` or `'eq'`.
   * `expr` can be a number (treated as constant), a `var` or an `expr` object.
-  * `strength` can be a number or `'WEAK'` (1), `'MEDIUM'` (1e3),
+  * `strength` can be a number or `'WEAK'` (1), `'MEDIUM'` (1e3; default),
   `'STRONG'` (1e6) or `'REQUIRED'` (1e9).
   * all objects have a `__tostring` metamethod for inspection.
